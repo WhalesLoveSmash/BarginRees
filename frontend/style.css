@@ -88,7 +88,7 @@ a:hover { text-decoration: underline; }
 .card-media {
   position: relative;
   overflow: hidden;
-  background: #fff; /* clean backdrop for contain fit */
+  background: #fff;
 }
 .card-body { padding: 1rem; }
 
@@ -100,13 +100,9 @@ a:hover { text-decoration: underline; }
 .card-media img {
   display: block;
   width: 100%;
-  height: auto;         /* keep intrinsic aspect ratio */
-  object-fit: contain;  /* show the whole image */
+  height: auto;
+  object-fit: contain;  /* keep whole PNG visible */
   filter: none !important;
   image-rendering: auto;
-  background: #fff;     /* prevents any dark bleed behind PNGs */
+  background: #fff;
 }
-
-/* If you ever want to fill the frame instead, switch to:
-.card-media img { object-fit: cover; }
-*/
