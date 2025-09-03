@@ -86,8 +86,8 @@
           <!-- Dummy Product Card -->
           <article class="card product" itemscope itemtype="https://schema.org/Product">
             <div class="card-media">
-              <img src="/pics/working.png" alt="BargainRees — store preview" itemprop="image" />
-              <img src="/pics/transparent.png" alt="" class="corner-logo" aria-hidden="true" />
+              <!-- ✅ Only one image now -->
+              <img src="/pics/working.png" alt="Dummy Item — BargainRees preview" itemprop="image" />
             </div>
             <div class="card-body">
               <h3 class="product-title" itemprop="name">Dummy Item</h3>
@@ -100,12 +100,8 @@
                 <span class="stock-pill">Local pickup • DSM</span>
               </div>
               <div class="actions">
-                <button class="button button-bargain" data-action="bargain" aria-label="Bargain for Dummy Item">
-                  Bargain
-                </button>
-                <button class="button button-buy" data-action="buy" aria-label="Buy Dummy Item now">
-                  Buy Now
-                </button>
+                <button class="button button-bargain" data-action="bargain">Bargain</button>
+                <button class="button button-buy" data-action="buy">Buy Now</button>
               </div>
             </div>
           </article>
@@ -199,12 +195,7 @@
       </div>
     </footer>
 
-    <!-- Accessibility helper -->
-    <div class="sr-only" aria-hidden="true">
-      <span id="sr-focus-outline">Focus outlines are enabled for keyboard users.</span>
-    </div>
-
-    <!-- JSON-LD (basic brand + site) -->
+    <!-- JSON-LD -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -221,6 +212,5 @@
 
     <!-- Scripts -->
     <script src="script.js" defer></script>
-    <noscript>This site works best with JavaScript enabled.</noscript>
   </body>
 </html>
