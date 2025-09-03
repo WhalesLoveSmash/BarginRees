@@ -1,0 +1,55 @@
+/* Minimal reset */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+html, body { height: 100%; }
+
+:root {
+  --bg: #ffffff;
+  --fg: #111111;
+  --muted: #6b7280;
+  --accent: #3b82f6; /* tweak me */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b0b0f;
+    --fg: #e5e7eb;
+    --muted: #9ca3af;
+  }
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+  padding: 2rem;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.container { max-width: 720px; margin: 0 auto; }
+
+.site-header, .site-footer { margin-block: 1rem; }
+.site-footer small { color: var(--muted); }
+
+.button {
+  display: inline-block;
+  border: 1px solid currentColor;
+  padding: .55rem .9rem;
+  border-radius: .6rem;
+  background: transparent;
+  cursor: pointer;
+}
+
+.button:focus-visible {
+  outline: 2px dashed var(--accent);
+  outline-offset: 2px;
+}
+
+/* Utility hooks you can use later */
+.hidden { display: none !important; }
+.center { text-align: center; }
