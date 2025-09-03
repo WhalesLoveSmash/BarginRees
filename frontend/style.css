@@ -7,7 +7,7 @@ html, body { height: 100%; }
   --bg: #ffffff;
   --fg: #111111;
   --muted: #6b7280;
-  --accent: #ec4899; /* hot pink for BargainRees */
+  --accent: #ec4899; /* hot pink */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -36,6 +36,7 @@ a:hover { text-decoration: underline; }
 .site-header, .site-footer { margin-block: 1rem; }
 .site-footer small { color: var(--muted); }
 
+/* Buttons */
 .button {
   display: inline-block;
   border: 1px solid currentColor;
@@ -44,13 +45,10 @@ a:hover { text-decoration: underline; }
   background: transparent;
   cursor: pointer;
 }
-
 .button:focus-visible {
   outline: 2px dashed var(--accent);
   outline-offset: 2px;
 }
-
-/* Buttons with variants */
 .button-primary {
   background: var(--accent);
   border: none;
@@ -58,9 +56,7 @@ a:hover { text-decoration: underline; }
   font-weight: bold;
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
-.button-primary:hover {
-  opacity: 0.9;
-}
+.button-primary:hover { opacity: 0.9; }
 .button-ghost {
   background: transparent;
   border: 1px solid var(--muted);
@@ -92,18 +88,25 @@ a:hover { text-decoration: underline; }
 .card-media {
   position: relative;
   overflow: hidden;
+  background: #fff; /* clean backdrop for contain fit */
 }
-.card-body {
-  padding: 1rem;
-}
+.card-body { padding: 1rem; }
 
-/* Utility hooks you can use later */
+/* Utility hooks */
 .hidden { display: none !important; }
 .center { text-align: center; }
 
-/* ✅ Ensure product image displays sharp and never blurred */
+/* ✅ Show product image exactly as-is (no crop, no blur) */
 .card-media img {
-  object-fit: cover;   /* or 'contain' if you prefer full image visible */
+  display: block;
+  width: 100%;
+  height: auto;         /* keep intrinsic aspect ratio */
+  object-fit: contain;  /* show the whole image */
   filter: none !important;
   image-rendering: auto;
+  background: #fff;     /* prevents any dark bleed behind PNGs */
 }
+
+/* If you ever want to fill the frame instead, switch to:
+.card-media img { object-fit: cover; }
+*/
