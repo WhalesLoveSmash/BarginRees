@@ -1,7 +1,6 @@
 /* =========================
-   BargainRees — Final Styles
-   Mobile-first, hot-pink vibe
-   (Image shows whole picture — no crop/zoom)
+   BargainRees — Styles (v3)
+   Ensures product photo shows the FULL image (no crop/zoom)
    ========================= */
 
 /* Reset / base */
@@ -130,19 +129,29 @@ section{ padding: 3rem 0; }
 }
 .card:hover{ box-shadow: var(--shadow-lg); }
 
-/* MEDIA: show whole picture — NO zoom/crop */
+/* ---------------------------------------
+   MEDIA: show the WHOLE picture (no crop)
+   --------------------------------------- */
 .card-media{
-  background: #fff;
-  border-bottom: 1px solid rgba(0,0,0,.04);
-  /* Let image decide height so we never crop it */
-}
-.card-media img{
-  display:block;
-  width:100%;
-  height:auto;           /* keep original aspect ratio */
-  object-fit: contain;   /* show whole pic */
   background:#fff;
+  border-bottom: 1px solid rgba(0,0,0,.04);
+
+  /* Kill any legacy aspect-ratio hacks */
+  aspect-ratio: auto !important;
+  padding: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
+.card-media::before{ content: none !important; }
+
+.card-media > img{
+  display:block;
+  width: 100% !important;
+  height: auto !important;     /* keep natural aspect ratio */
+  object-fit: contain !important;
+  image-rendering: auto;
   filter: none !important;
+  background:#fff;
 }
 
 .card-body{ padding:1rem; }
@@ -184,7 +193,7 @@ section{ padding: 3rem 0; }
 .foot-right a{ color:var(--muted); }
 .foot-right a:hover{ color:var(--fg); text-decoration:none; }
 
-/* IO reveal perf hint */
+/* Reveal perf hint */
 .hero-inner, .section-head, .card{ will-change: opacity, transform; }
 
 /* Reduced motion */

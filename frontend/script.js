@@ -1,23 +1,36 @@
 'use strict';
 
+/*
+  BargainRees — Frontend Flair (v3)
+  - Keeps your existing behaviors
+  - Adds crisp polish: active nav highlight, scroll progress, micro-parallax, smarter reveal
+  - Zero HTML changes required; works with the CSS/HTML you just deployed
+*/
+
 document.addEventListener('DOMContentLoaded', () => {
   // ============ Tiny helpers ============
   const $  = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const prefersNoMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ============ Year ============
+  // Year
   const yearEl = $('#year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // ============ Smooth focus after in-page nav (a11y polish) ============
+  // Add lazy hints to images if not set (no HTML edits needed)
+  $$('img').forEach(img => {
+    if (!img.hasAttribute('loading')) img.loading = 'lazy';
+    if (!img.hasAttribute('decoding')) img.decoding = 'async';
+  });
+
+  // Smooth focus after in-page nav (a11y polish)
   $$('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', (e) => {
+    a.addEventListener('click', () => {
       const id = a.getAttribute('href');
       if (!id || id === '#') return;
       const target = $(id);
       if (!target) return;
-      // let CSS do smooth-scrolling; then move focus for keyboard users
       setTimeout(() => {
         target.setAttribute('tabindex', '-1');
         target.focus({ preventScroll: true });
@@ -25,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ============ Sticky header shadow ============
+  // ============ Sticky header glow ============
   const header = $('.site-header');
   const updateHeader = () => {
     if (!header) return;
@@ -38,36 +51,63 @@ document.addEventListener('DOMContentLoaded', () => {
   updateHeader();
   window.addEventListener('scroll', updateHeader, { passive: true });
 
+  // ============ Top scroll progress bar ============
+  const progress = document.createElement('div');
+  Object.assign(progress.style, {
+    position:'fixed', left:0, top:0, height:'3px', width:'0%',
+    background:'linear-gradient(90deg, #ec4899, #be185d)',
+    boxShadow:'0 0 8px rgba(236,72,153,.65)',
+    zIndex:9998, transition: prefersNoMotion ? 'none' : 'width .1s linear'
+  });
+  document.body.appendChild(progress);
+  const updateProgress = () => {
+    const h = document.documentElement;
+    const scroll = h.scrollTop || document.body.scrollTop || 0;
+    const max = (h.scrollHeight - h.clientHeight) || 1;
+    progress.style.width = `${(scroll / max) * 100}%`;
+  };
+  updateProgress();
+  window.addEventListener('scroll', updateProgress, { passive:true });
+  window.addEventListener('resize', updateProgress);
+
   // ============ Toast system ============
   const toastHost = document.createElement('div');
   Object.assign(toastHost.style, {
-    position: 'fixed', inset: 'auto 0 18px 0', display: 'grid', placeItems: 'center',
-    pointerEvents: 'none', zIndex: 9999
+    position:'fixed', inset:'auto 0 18px 0', display:'grid', placeItems:'center',
+    pointerEvents:'none', zIndex:9999
   });
   document.body.appendChild(toastHost);
 
   function showToast(message, subtype = 'pink', timeout = 2800) {
     const t = document.createElement('div');
-    t.setAttribute('role', 'status');
-    t.setAttribute('aria-live', 'polite');
+    t.setAttribute('role','status');
+    t.setAttribute('aria-live','polite');
     Object.assign(t.style, {
-      pointerEvents: 'auto', padding: '12px 16px', margin: '6px', borderRadius: '14px',
-      fontWeight: '700', boxShadow: '0 14px 30px rgba(0,0,0,.35)', border: '1px solid rgba(255,255,255,.12)',
-      backdropFilter: 'saturate(130%) blur(6px)', transition: 'transform .18s ease, opacity .18s ease'
+      pointerEvents:'auto', padding:'12px 16px', margin:'6px', borderRadius:'14px',
+      fontWeight:'700', boxShadow:'0 14px 30px rgba(0,0,0,.35)', border:'1px solid rgba(255,255,255,.12)',
+      backdropFilter:'saturate(130%) blur(6px)', transition:'transform .18s ease, opacity .18s ease'
     });
     if (subtype === 'pink') {
-      t.style.background = 'linear-gradient(180deg, #ec4899, #be185d)'; t.style.color = '#fff';
-    } else { t.style.background = 'rgba(17,19,26,.86)'; t.style.color = 'var(--fg, #e7e9ee)'; }
-    t.textContent = message; t.style.transform = 'translateY(10px)'; t.style.opacity = '0';
+      t.style.background = 'linear-gradient(180deg, #ec4899, #be185d)';
+      t.style.color = '#fff';
+    } else {
+      t.style.background = 'rgba(17,19,26,.86)';
+      t.style.color = 'var(--fg, #e7e9ee)';
+    }
+    t.textContent = message;
+    t.style.transform = 'translateY(10px)'; t.style.opacity = '0';
     toastHost.appendChild(t);
     requestAnimationFrame(() => { t.style.transform = 'translateY(0)'; t.style.opacity = '1'; });
-    const dismiss = () => { t.style.transform = 'translateY(6px)'; t.style.opacity = '0'; setTimeout(() => t.remove(), 180); };
+    const dismiss = () => {
+      t.style.transform = 'translateY(6px)'; t.style.opacity = '0';
+      setTimeout(() => t.remove(), 180);
+    };
     if (timeout > 0) setTimeout(dismiss, timeout);
-    t.addEventListener('click', dismiss);
-    window.addEventListener('keydown', (ev) => ev.key === 'Escape' && dismiss(), { once: true, capture: true });
+    t.addEventListener('click', dismiss, { once:true });
+    window.addEventListener('keydown', (ev) => ev.key === 'Escape' && dismiss(), { once:true, capture:true });
   }
 
-  // ============ Reveal-on-enter (IO) ============
+  // ============ Reveal-on-enter (Intersection Observer) ============
   const toReveal = ['.hero-inner', '.section-head', '.card'].flatMap(sel => $$(sel));
   const revealOnce = (el) => {
     el.style.opacity = '0';
@@ -98,10 +138,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const rect = btn.getBoundingClientRect();
       const size = Math.max(rect.width, rect.height);
       Object.assign(r.style, {
-        position: 'absolute', left: `${e.clientX - rect.left - size/2}px`, top: `${e.clientY - rect.top - size/2}px`,
-        width: `${size}px`, height: `${size}px`, borderRadius: '50%',
-        background: 'rgba(255,255,255,.35)', transform: 'scale(0)', opacity: '0.9',
-        transition: 'transform .45s ease, opacity .6s ease', pointerEvents: 'none'
+        position:'absolute', left:`${e.clientX - rect.left - size/2}px`, top:`${e.clientY - rect.top - size/2}px`,
+        width:`${size}px`, height:`${size}px`, borderRadius:'50%',
+        background:'rgba(255,255,255,.35)', transform:'scale(0)', opacity:'0.9',
+        transition:'transform .45s ease, opacity .6s ease', pointerEvents:'none'
       });
       btn.appendChild(r);
       requestAnimationFrame(() => { r.style.transform = 'scale(1)'; r.style.opacity = '0'; });
@@ -129,6 +169,17 @@ document.addEventListener('DOMContentLoaded', () => {
     ['pointerleave','blur'].forEach(ev => card.addEventListener(ev, resetTilt));
   }
 
+  // ============ Micro parallax on hero (very subtle) ============
+  const hero = $('.hero');
+  const heroInner = $('.hero-inner');
+  const parallax = () => {
+    if (prefersNoMotion || !heroInner) return;
+    const y = clamp(window.scrollY, 0, 200);
+    heroInner.style.transform = `translateY(${y * -0.05}px)`; // very subtle
+  };
+  parallax();
+  window.addEventListener('scroll', parallax, { passive:true });
+
   // ============ Simple confetti on Bargain ============
   function confettiBurst(x, y) {
     if (prefersNoMotion) return;
@@ -141,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(cnv);
 
     const colors = ['#ec4899','#f472b6','#f43f5e','#22c55e','#3b82f6','#f59e0b'];
-    const N = 32;
+    const N = 36;
     const parts = Array.from({length:N}, () => ({
       x: x * dpr, y: y * dpr, r: Math.random()*6+4, a: Math.random()*Math.PI*2,
       vx: (Math.random()-0.5)*5, vy: -Math.random()*6-3, g: 0.15+Math.random()*0.1,
@@ -164,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ============ Bargain / Buy handlers (+count) ============
   let bargainClicks = Number(localStorage.getItem('br_bargain_clicks') || '0');
 
-  function updateBargainBadge() {
+  function updateBargainBadge(animated = false) {
     const btn = $('[data-action="bargain"]');
     if (!btn) return;
     let badge = btn.querySelector('.br-badge');
@@ -172,35 +223,78 @@ document.addEventListener('DOMContentLoaded', () => {
       badge = document.createElement('span');
       badge.className = 'br-badge';
       Object.assign(badge.style, {
-        marginLeft: '8px', fontSize: '12px', fontWeight: '700',
-        padding: '2px 6px', borderRadius: '999px',
-        background: 'rgba(255,255,255,.18)', border: '1px solid rgba(255,255,255,.24)'
+        marginLeft:'8px', fontSize:'12px', fontWeight:'700',
+        padding:'2px 6px', borderRadius:'999px',
+        background:'rgba(255,255,255,.18)', border:'1px solid rgba(255,255,255,.24)'
       });
       btn.appendChild(badge);
     }
-    badge.textContent = `${bargainClicks} bargained`;
+    const start = Number(badge.textContent) || 0;
+    const target = bargainClicks;
+    if (animated && !prefersNoMotion) {
+      const t0 = performance.now();
+      const dur = 380;
+      const tick = (t) => {
+        const k = clamp((t - t0) / dur, 0, 1);
+        const val = Math.round(start + (target - start) * k);
+        badge.textContent = `${val} bargained`;
+        if (k < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    } else {
+      badge.textContent = `${target} bargained`;
+    }
   }
-  updateBargainBadge();
+  updateBargainBadge(false);
 
   document.addEventListener('click', (e) => {
     const btn = e.target.closest('button,[data-action]');
     if (!btn) return;
     const action = btn.getAttribute('data-action');
+
     if (action === 'bargain') {
       bargainClicks += 1;
       localStorage.setItem('br_bargain_clicks', String(bargainClicks));
-      updateBargainBadge();
+      updateBargainBadge(true);
       localStorage.setItem('br_last_action', 'bargain');
       showToast('Offer sent — we’ll see what we can do 💸', 'pink');
-      // confetti from button center
       const r = btn.getBoundingClientRect();
       confettiBurst(r.left + r.width/2, r.top + r.height/2);
     }
+
     if (action === 'buy') {
       localStorage.setItem('br_last_action', 'buy');
       showToast('Buy flow opens at launch — thanks for the support ❤️', 'ghost');
     }
   });
+
+  // ============ Active section highlight in nav ============
+  const sections = ['home','store','about','socials'].map(id => ({ id, el: document.getElementById(id) }))
+                                                     .filter(s => s.el);
+  const navLinks = new Map();
+  $$('.nav-list a').forEach(a => {
+    const hash = (a.getAttribute('href') || '').replace('#','');
+    if (hash) navLinks.set(hash, a);
+  });
+
+  if ('IntersectionObserver' in window && sections.length) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(ent => {
+        if (!ent.isIntersecting) return;
+        const id = ent.target.id;
+        navLinks.forEach((a, key) => {
+          if (key === id) {
+            a.setAttribute('aria-current', 'page');
+            a.style.background = 'rgba(236,72,153,.12)';
+          } else {
+            a.removeAttribute('aria-current');
+            a.style.background = '';
+          }
+        });
+      });
+    }, { rootMargin: '-35% 0px -55% 0px', threshold: 0.01 });
+    sections.forEach(s => obs.observe(s.el));
+  }
 
   // ============ Shortcuts ============
   window.addEventListener('keydown', (e) => {
@@ -214,4 +308,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (store) { store.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     }
   });
+
+  // Little “first visit” toast to make the page feel alive
+  if (!localStorage.getItem('br_first_seen')) {
+    localStorage.setItem('br_first_seen', '1');
+    setTimeout(() => showToast('Welcome to BargainRees ✨', 'pink', 2200), 450);
+  }
 });
