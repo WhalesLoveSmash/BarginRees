@@ -1,26 +1,221 @@
-x   <!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
+    <!-- Essentials -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Describe your page here." />
+
+    <title>BarginRees : Des Moines Thrift/title>
+    <meta name="description" content="BarginRees is a Des Moines–local clothing resale shop. Clothes don’t expire, stores just want you to think they do." />
     <meta name="color-scheme" content="light dark" />
-    <title>BarginRees</title>
+    <meta name="theme-color" content="#ec4899" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://bargainrees.com/" />
+
+    <!-- Open Graph / Twitter (uses your logo as placeholder image) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="BarginRees — Des Moines Thrift" />
+    <meta property="og:description" content="Clothes don’t expire—stores just want you to think they do." />
+    <meta property="og:url" content="https://bargainrees.com/" />
+    <meta property="og:image" content="/BarginReesLogo.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="BarginRees — Des Moines Thrift" />
+    <meta name="twitter:description" content="Clothes don’t expire—stores just want you to think they do." />
+    <meta name="twitter:image" content="/BarginReesLogo.png" />
+
+    <!-- Favicon (optional: reuse logo) -->
+    <link rel="icon" href="/BarginReesLogo.png" type="image/png" />
+
+    <!-- Styles -->
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <!-- Announcement / Launch Banner -->
+    <div class="announce" role="status" aria-live="polite">
+      <div class="container">
+        <strong>Store opens</strong> <span class="nowrap">Thursday, September 4, 2025</span> — <em>Des Moines only</em>.
+      </div>
+    </div>
+
+    <!-- Header / Nav -->
     <header class="site-header" role="banner">
-      <h1>BarginRees</h1>
+      <div class="container nav">
+        <a href="#home" class="brand">
+          <img src="/BarginReesLogo.png" alt="BarginRees logo" class="brand-logo" />
+          <span class="brand-text">BarginRees</span>
+        </a>
+        <nav aria-label="Primary">
+          <ul class="nav-list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#store">Store</a></li>
+            <li><a href="#about">About / Contact / FAQ</a></li>
+            <li><a href="#socials">Socials</a></li>
+          </ul>
+        </nav>
+      </div>
     </header>
 
-    <main id="app" class="container" role="main">
-      <p>I will make the site later.</p>
-    </main>
+    <!-- Hero -->
+    <section id="home" class="hero" role="region" aria-labelledby="hero-title">
+      <div class="container hero-inner">
+        <h1 id="hero-title">Clothes Don’t Expire, Stores Just Want You to Think They Do.</h1>
+        <p class="hero-sub">Local Des Moines clothing resale Bargain with us or just buy it, up to you.</p>
+        <div class="hero-cta">
+          <a class="button button-primary" href="#store">Browse Store</a>
+          <a class="button button-ghost" href="#about" aria-describedby="about-merge-note">About / Contact / FAQ</a>
+        </div>
+        <p id="about-merge-note" class="sr-only">About, contact, and frequently asked questions are combined in one section.</p>
+      </div>
+    </section>
 
+    <!-- Store -->
+    <section id="store" class="store" role="region" aria-labelledby="store-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="store-title">Store</h2>
+          <p class="muted">One product for now — real inventory coming at launch.</p>
+        </div>
+
+        <div class="grid">
+          <!-- Dummy Product Card -->
+          <article class="card product" itemscope itemtype="https://schema.org/Product">
+            <div class="card-media">
+              <!-- Replace with a real thumbnail when ready -->
+              <img src="https://placehold.co/800x900?text=Clothes+Photo" alt="Dummy Item — placeholder clothes" itemprop="image" />
+              <img src="/BarginReesLogo.png" alt="" class="corner-logo" aria-hidden="true" />
+            </div>
+            <div class="card-body">
+              <h3 class="product-title" itemprop="name">Dummy Item</h3>
+              <p class="product-desc" itemprop="description">Work-in-progress listing. This is a sample card showing how items will look.</p>
+              <div class="price-row">
+                <span class="price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                  <meta itemprop="priceCurrency" content="USD" />
+                  <span itemprop="price">$18</span>
+                </span>
+                <span class="stock-pill">Local pickup • DSM</span>
+              </div>
+              <div class="actions">
+                <button class="button button-bargain" data-action="bargain" aria-label="Bargain for Dummy Item">
+                  Bargain
+                </button>
+                <button class="button button-buy" data-action="buy" aria-label="Buy Dummy Item now">
+                  Buy Now
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- About / Contact / FAQ -->
+    <section id="about" class="about" role="region" aria-labelledby="about-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="about-title">About / Contact / FAQ</h2>
+          <p class="muted">Minimal pages, maximal vibes. We’re a local resale shop</p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-block">
+            <h3>About BarginRees</h3>
+            <p>We help good clothes find new life. Hyper-local Des Moines resale with too much over designed technology. Launching with a tiny catalog and a very large personality.</p>
+          </div>
+
+          <div class="about-block">
+            <h3>Contact</h3>
+            <p>Questions? Collabs? Weird bulk drop-offs? Email us:</p>
+            <p><a href="mailto:dannyrhalsteadbackup@gmail.com">dannyrhalsteadbackup@gmail.com</a></p>
+          </div>
+
+          <div class="about-block">
+            <h3>FAQ</h3>
+            <details>
+              <summary>How does “Bargain” work?</summary>
+              <p>Click <strong>Bargain</strong> to shoot your shot. We’ll nudge the price if we can. Buy Now is there too, but it’s smaller on purpose 😉</p>
+            </details>
+            <details>
+              <summary>Do you ship?</summary>
+              <p>At launch we’re **Des Moines only** with local pickup. Shipping may come later.</p>
+            </details>
+            <details>
+              <summary>What’s the return policy?</summary>
+              <p>WIP: simple, friendly, and honest. We’ll publish the exact policy at launch.</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Socials -->
+    <section id="socials" class="socials" role="region" aria-labelledby="socials-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="socials-title">Follow BarginRees</h2>
+          <p class="muted">We post drops, dumb memes, and decent deals.</p>
+        </div>
+
+        <div class="link-cards">
+          <a class="link-card" href="https://instagram.com/BarginRees" target="_blank" rel="noopener">
+            <div class="link-card-body">
+              <img src="/BarginReesLogo.png" alt="" class="mini-logo" aria-hidden="true" />
+              <div>
+                <div class="link-card-title">Instagram</div>
+                <div class="link-card-sub">@BarginRees</div>
+              </div>
+            </div>
+          </a>
+
+          <a class="link-card" href="https://tiktok.com/@BarginRees" target="_blank" rel="noopener">
+            <div class="link-card-body">
+              <img src="/BarginReesLogo.png" alt="" class="mini-logo" aria-hidden="true" />
+              <div>
+                <div class="link-card-title">TikTok</div>
+                <div class="link-card-sub">@BarginRees</div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
     <footer class="site-footer" role="contentinfo">
-      <small>&copy; <span id="year"></span></small>
+      <div class="container footer-inner">
+        <div class="foot-left">
+          <img src="/BarginReesLogo.png" alt="" class="mini-logo" aria-hidden="true" />
+          <span>&copy; <span id="year"></span> BarginRees — Des Moines, IA</span>
+        </div>
+        <div class="foot-right">
+          <a href="#about">About</a>
+          <a href="#socials">Socials</a>
+          <a href="#store">Store</a>
+        </div>
+      </div>
     </footer>
 
+    <!-- Accessibility helper -->
+    <div class="sr-only" aria-hidden="true">
+      <span id="sr-focus-outline">Focus outlines are enabled for keyboard users.</span>
+    </div>
+
+    <!-- JSON-LD (basic brand + site) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": ["Organization", "WebSite"],
+        "name": "BarginRees",
+        "url": "https://bargainrees.com/",
+        "logo": "https://bargainrees.com/BarginReesLogo.png",
+        "sameAs": [
+          "https://instagram.com/BarginRees",
+          "https://tiktok.com/@BarginRees"
+        ]
+      }
+    </script>
+
+    <!-- Scripts -->
     <script src="script.js" defer></script>
     <noscript>This site works best with JavaScript enabled.</noscript>
   </body>
