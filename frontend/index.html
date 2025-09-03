@@ -13,21 +13,21 @@
     <!-- Canonical -->
     <link rel="canonical" href="https://bargainrees.com/" />
 
-    <!-- Open Graph / Twitter (Social Preview) -->
+    <!-- Social Preview -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="BargainRees — Des Moines Thrift" />
+    <meta property="og:title" content="BargainRees DSM Thrift" />
     <meta property="og:description" content="Clothes don’t expire—stores just want you to think they do." />
     <meta property="og:url" content="https://bargainrees.com/" />
     <meta property="og:image" content="https://bargainrees.com/pics/working.png" />
-    <meta property="og:image:alt" content="BargainRees preview image" />
+    <meta property="og:image:alt" content="BargainRees brand preview" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="BargainRees — Des Moines Thrift" />
+    <meta name="twitter:title" content="BargainRees DSM Thrift" />
     <meta name="twitter:description" content="Clothes don’t expire—stores just want you to think they do." />
     <meta name="twitter:image" content="https://bargainrees.com/pics/working.png" />
-    <meta name="twitter:image:alt" content="BargainRees preview image" />
+    <meta name="twitter:image:alt" content="BargainRees brand preview" />
 
     <!-- Icons -->
     <link rel="icon" href="/pics/transparent.png" type="image/png" />
@@ -37,14 +37,14 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!-- Announcement / Launch Banner -->
+    <!-- Announcement -->
     <div class="announce" role="status" aria-live="polite">
       <div class="container">
         <strong>Store opens</strong> <span class="nowrap">Thursday, September 4, 2025</span> — <em>Des Moines only</em>.
       </div>
     </div>
 
-    <!-- Header / Nav -->
+    <!-- Header -->
     <header class="site-header" role="banner">
       <div class="container nav">
         <a href="#home" class="brand" aria-label="BargainRees home">
@@ -83,11 +83,10 @@
         </div>
 
         <div class="grid">
-          <!-- Dummy Product Card -->
           <article class="card product" itemscope itemtype="https://schema.org/Product">
             <div class="card-media">
-              <!-- ✅ Only one image now -->
-              <img src="/pics/working.png" alt="Dummy Item — BargainRees preview" itemprop="image" />
+              <!-- SHOW THE WHOLE PIC: no crop, no zoom -->
+              <img src="/pics/working.png" alt="Dummy Item — BargainRees product preview" itemprop="image" />
             </div>
             <div class="card-body">
               <h3 class="product-title" itemprop="name">Dummy Item</h3>
@@ -100,8 +99,8 @@
                 <span class="stock-pill">Local pickup • DSM</span>
               </div>
               <div class="actions">
-                <button class="button button-bargain" data-action="bargain">Bargain</button>
-                <button class="button button-buy" data-action="buy">Buy Now</button>
+                <button class="button button-bargain" data-action="bargain" aria-label="Bargain for Dummy Item">Bargain</button>
+                <button class="button button-buy" data-action="buy" aria-label="Buy Dummy Item now">Buy Now</button>
               </div>
             </div>
           </article>
@@ -195,6 +194,11 @@
       </div>
     </footer>
 
+    <!-- a11y helper -->
+    <div class="sr-only" aria-hidden="true">
+      <span id="sr-focus-outline">Focus outlines are enabled for keyboard users.</span>
+    </div>
+
     <!-- JSON-LD -->
     <script type="application/ld+json">
       {
@@ -210,7 +214,7 @@
       }
     </script>
 
-    <!-- Scripts -->
     <script src="script.js" defer></script>
+    <noscript>This site works best with JavaScript enabled.</noscript>
   </body>
 </html>
