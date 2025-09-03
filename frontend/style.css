@@ -5,16 +5,16 @@ html, body { height: 100%; }
 html { scroll-behavior: smooth; }
 
 :root{
-  --bg: #0b0b0f;          /* backdrop (dark by default: sleek startup) */
-  --panel: #11131a;       /* card surface */
+  --bg: #0b0b0f;          /* dark base for sleek look */
+  --panel: #11131a;       /* surfaces / cards */
   --glass: rgba(255,255,255,.04);
   --border: rgba(255,255,255,.12);
-  --fg: #e7e9ee;          /* text */
+  --fg: #e7e9ee;          /* primary text */
   --muted: #a3a7b3;       /* secondary text */
-  --hotpink: #ec4899;     /* accent (chosen) */
+
+  --hotpink: #ec4899;     /* brand accent */
   --hotpink-700: #db2777;
   --hotpink-800: #be185d;
-  --ok: #10b981;
 
   --radius: 18px;
   --shadow: 0 10px 30px rgba(0,0,0,.35);
@@ -40,9 +40,10 @@ html { scroll-behavior: smooth; }
 }
 
 body{
-  background: radial-gradient(1200px 800px at 10% -10%, rgba(236,72,153,.12), transparent 40%),
-              radial-gradient(1100px 700px at 110% 10%, rgba(236,72,153,.08), transparent 45%),
-              var(--bg);
+  background:
+    radial-gradient(1200px 800px at 10% -10%, rgba(236,72,153,.12), transparent 40%),
+    radial-gradient(1100px 700px at 110% 10%, rgba(236,72,153,.08), transparent 45%),
+    var(--bg);
   color: var(--fg);
   font: 16px/1.55 system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
 }
@@ -151,7 +152,9 @@ body{
 
 /* Card */
 .card{
-  background: linear-gradient(180deg, color-mix(in oklab, var(--panel) 92%, transparent), color-mix(in oklab, var(--panel) 98%, transparent));
+  background: linear-gradient(180deg,
+    color-mix(in oklab, var(--panel) 92%, transparent),
+    color-mix(in oklab, var(--panel) 98%, transparent));
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
